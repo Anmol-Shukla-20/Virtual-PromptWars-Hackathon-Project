@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Activity | EcoPath AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex z-10">
+        <div class="h-16 flex items-center px-6 border-b border-gray-200">
+            <h1 class="text-2xl font-bold text-green-600">EcoPath AI</h1>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="planner.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>🗺️</span> Travel Planner
+            </a>
+            <a href="log.html" class="flex items-center gap-3 px-4 py-3 bg-green-50 text-green-700 rounded-xl font-medium transition-colors">
+                <span>📝</span> Log Activity
+            </a>
+            <a href="scoreboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>🏆</span> Scoreboard
+            </a>
+            <a href="chat.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>🤖</span> Chat Assistance
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-200">
+            <button id="logoutBtn" class="flex w-full items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-colors">
+                <span>🚪</span> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        
+        <header class="md:hidden bg-white shadow-sm border-b border-gray-200 h-16 flex items-center justify-between px-4 shrink-0">
+            <h1 class="text-xl font-bold text-green-600">EcoPath AI</h1>
+            <button id="mobileMenuBtn" class="text-gray-600 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </header>
+
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6 hidden md:block">Log Activity</h1>
+                
+                <div class="bg-white rounded-2xl shadow-sm p-6 sm:p-8 border border-gray-100">
+                    <p class="text-gray-500 mb-6">Manually track your daily emissions to improve your Sustainability Score.</p>
+                    
+                    <div class="flex border-b border-gray-200 mb-6 overflow-x-auto hide-scrollbar">
+                        <button class="px-4 py-2 font-medium text-green-600 border-b-2 border-green-600 whitespace-nowrap" id="tab-transport">🚗 Transportation</button>
+                        <button class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700 whitespace-nowrap" id="tab-electricity">⚡ Electricity</button>
+                        <button class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700 whitespace-nowrap" id="tab-lifestyle">🥗 Diet & Lifestyle</button>
+                        <button class="px-4 py-2 font-medium text-gray-500 hover:text-gray-700 whitespace-nowrap" id="tab-shopping">🛍️ Shopping</button>
+                    </div>
+
+                    <!-- Transport Form -->
+                    <form id="transportForm" class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Mode of Transport</label>
+                            <select id="transportMode" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                <option value="walking">Walking</option>
+                                <option value="cycling">Cycling</option>
+                                <option value="metro">Metro</option>
+                                <option value="bus">Bus</option>
+                                <option value="carpool">Carpool</option>
+                                <option value="ev">Electric Vehicle (EV)</option>
+                                <option value="car">Car</option>
+                                <option value="scooty">Scooty</option>
+                                <option value="motorbike">Motorbike</option>
+                            </select>
+                        </div>
+                        <div id="evCheckboxContainer" class="hidden flex items-center mt-2">
+                            <input type="checkbox" id="evRenewable" class="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500">
+                            <label for="evRenewable" class="ml-2 text-sm text-gray-700">Was this EV charged with renewable energy?</label>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Distance Travelled (km)</label>
+                            <input type="number" id="transportDistance" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="e.g., 15" required>
+                        </div>
+                        <button type="submit" class="w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-lg hover:bg-green-700 transition-colors mt-4">
+                            Log Transport Activity
+                        </button>
+                    </form>
+
+                    <!-- Electricity Form -->
+                    <form id="electricityForm" class="space-y-4 hidden">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Electricity Consumed (kWh / Units)</label>
+                            <input type="number" id="electricityUnits" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" placeholder="e.g., 50" required>
+                        </div>
+                        <button type="submit" class="w-full bg-yellow-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-yellow-600 transition-colors mt-4">
+                            Log Electricity Usage
+                        </button>
+                    </form>
+
+                    <!-- Lifestyle Form -->
+                    <form id="lifestyleForm" class="space-y-4 hidden">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Daily Diet Preference</label>
+                            <select id="dietPreference" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                <option value="Vegetarian">Vegetarian</option>
+                                <option value="Eggetarian">Eggetarian</option>
+                                <option value="Non-Vegetarian">Non-Vegetarian</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-blue-600 transition-colors mt-4">
+                            Log Daily Diet
+                        </button>
+                    </form>
+
+                    <!-- Shopping Form -->
+                    <form id="shoppingForm" class="space-y-4 hidden">
+                        <div>
+                            <label class="block text-sm font-medium text-gray-700 mb-1">Monthly Shopping Frequency</label>
+                            <select id="shoppingFrequency" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+                                <option value="low">Low (Rarely shop for non-essentials)</option>
+                                <option value="medium">Medium (Moderate shopping)</option>
+                                <option value="high">High (Frequent shopping for clothes, electronics, etc.)</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="w-full bg-purple-500 text-white font-semibold py-3 px-4 rounded-lg hover:bg-purple-600 transition-colors mt-4">
+                            Log Shopping Habit
+                        </button>
+                    </form>
+
+                    <!-- Feedback message -->
+                    <div id="logFeedback" class="mt-4 hidden p-4 rounded-xl text-sm font-medium"></div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/log.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | EcoPath AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans antialiased h-screen flex overflow-hidden">
+
+    <!-- Sidebar -->
+    <aside class="w-64 bg-white border-r border-gray-200 flex flex-col hidden md:flex z-10">
+        <div class="h-16 flex items-center px-6 border-b border-gray-200">
+            <h1 class="text-2xl font-bold text-green-600">EcoPath AI</h1>
+        </div>
+        <nav class="flex-1 px-4 py-6 space-y-2 overflow-y-auto">
+            <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 bg-green-50 text-green-700 rounded-xl font-medium transition-colors">
+                <span>📊</span> Dashboard
+            </a>
+            <a href="planner.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>🗺️</span> Travel Planner
+            </a>
+            <a href="log.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>📝</span> Log Activity
+            </a>
+            <a href="scoreboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>🏆</span> Scoreboard
+            </a>
+            <a href="chat.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 hover:text-green-600 rounded-xl font-medium transition-colors">
+                <span>🤖</span> Chat Assistance
+            </a>
+        </nav>
+        <div class="p-4 border-t border-gray-200">
+            <button id="logoutBtn" class="flex w-full items-center gap-3 px-4 py-3 text-red-600 hover:bg-red-50 rounded-xl font-medium transition-colors">
+                <span>🚪</span> Logout
+            </button>
+        </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-1 flex flex-col overflow-hidden">
+        
+        <!-- Mobile Header (Visible only on small screens) -->
+        <header class="md:hidden bg-white shadow-sm border-b border-gray-200 h-16 flex items-center justify-between px-4 shrink-0">
+            <h1 class="text-xl font-bold text-green-600">EcoPath AI</h1>
+            <div class="flex items-center gap-3">
+                <button class="global-search-btn flex items-center justify-center w-10 h-10 rounded-full bg-gray-100 text-gray-600 focus:outline-none">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+                <button id="mobileMenuBtn" class="text-gray-600 focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- Desktop Header -->
+        <header class="hidden md:flex bg-white h-16 items-center justify-end px-8 shrink-0 z-40 relative">
+            <div class="flex items-center gap-4">
+                <button class="global-search-btn text-gray-500 hover:text-gray-700 transition-colors focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+
+                <div class="relative">
+                    <button id="profileDropdownBtn" class="flex items-center gap-2 bg-white border border-gray-300 rounded-full pl-1 pr-3 py-1 hover:shadow-md transition-all focus:outline-none">
+                        <div id="userAvatarInitial" class="w-8 h-8 rounded-full bg-green-700 text-white flex items-center justify-center font-bold text-sm">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        </div>
+                        <svg class="w-5 h-5 text-green-800" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div id="profileDropdown" class="hidden absolute right-0 mt-3 w-56 bg-white rounded-2xl shadow-xl border border-gray-100 py-3 z-50 transform origin-top-right transition-all">
+                        <a href="dashboard.html" class="flex items-center gap-3 px-5 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors">
+                            <svg class="w-5 h-5 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                            <span class="font-medium text-[15px]">Dashboard</span>
+                        </a>
+                        <a href="scoreboard.html" class="flex items-center gap-3 px-5 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors">
+                            <svg class="w-5 h-5 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                            <span class="font-medium text-[15px]">Achievements</span>
+                        </a>
+                        <a href="profile.html" class="flex items-center gap-3 px-5 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors border-b border-gray-100 pb-4 mb-2">
+                            <svg class="w-5 h-5 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                            <span class="font-medium text-[15px]">Profile</span>
+                        </a>
+
+                        <button id="dropdownLogoutBtn" class="w-full flex items-center gap-3 px-5 py-2.5 text-green-800 hover:bg-green-50 transition-colors mt-1">
+                            <svg class="w-5 h-5 text-green-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                            <span class="font-medium text-[15px]">Sign Out</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Scrollable Area -->
+        <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+            <div class="max-w-7xl mx-auto">
+                <h1 class="text-2xl font-bold text-gray-900 mb-6 hidden md:block">Overview</h1>
+                
+                <!-- Top Stats Row -->
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                    <!-- Sustainability Score -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border-l-4 border-green-500">
+                        <h3 class="text-sm font-medium text-gray-500">Sustainability Score</h3>
+                        <div class="mt-2 flex items-baseline gap-2">
+                            <span class="text-4xl font-bold text-gray-900" id="susScore">...</span>
+                            <span class="text-sm font-medium text-gray-500">/ 100</span>
+                        </div>
+                        <div class="mt-2 text-sm text-green-600 flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                            Top 20% this week
+                        </div>
+                    </div>
+
+                    <!-- Total CO2 Saved -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border-l-4 border-blue-500">
+                        <h3 class="text-sm font-medium text-gray-500">Total CO₂ Saved</h3>
+                        <div class="mt-2 flex items-baseline gap-2">
+                            <span class="text-4xl font-bold text-gray-900" id="co2Saved">...</span>
+                            <span class="text-sm font-medium text-gray-500">kg</span>
+                        </div>
+                    </div>
+
+                    <!-- Eco Points -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border-l-4 border-yellow-500">
+                        <h3 class="text-sm font-medium text-gray-500">Eco Points</h3>
+                        <div class="mt-2 flex items-baseline gap-2">
+                            <span class="text-4xl font-bold text-gray-900" id="ecoPoints">...</span>
+                        </div>
+                        <div class="mt-2 text-sm text-gray-500">Level: <span class="font-semibold text-yellow-600" id="userLevel">...</span></div>
+                    </div>
+
+                    <!-- Leaderboard Position -->
+                    <div class="bg-white rounded-2xl shadow-sm p-6 border-l-4 border-purple-500">
+                        <h3 class="text-sm font-medium text-gray-500">Global Rank</h3>
+                        <div class="mt-2 flex items-baseline gap-2">
+                            <span class="text-4xl font-bold text-gray-900" id="globalRank">...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty State Container -->
+                <div id="emptyStateContainer" class="hidden col-span-1 lg:col-span-3 bg-white rounded-2xl shadow-sm p-12 text-center border-2 border-dashed border-green-200 mb-8">
+                    <div class="text-6xl mb-4">🌱</div>
+                    <h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome to your EcoPath Journey!</h2>
+                    <p class="text-gray-500 mb-6 max-w-md mx-auto">You haven't logged any activities yet. Start tracking your daily commute, diet, and electricity usage to see your carbon footprint and earn EcoPoints!</p>
+                    <a href="log.html" class="inline-block bg-green-600 text-white font-semibold px-6 py-3 rounded-xl hover:bg-green-700 transition-colors shadow-md">
+                        Log Your First Activity
+                    </a>
+                </div>
+
+                <div id="chartsGrid" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column: Charts -->
+                    <div class="lg:col-span-2 space-y-8">
+                        <!-- Footprint Breakdown -->
+                        <div class="bg-white rounded-2xl shadow-sm p-6">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">Emissions Breakdown</h2>
+                            <div class="h-64 flex justify-center">
+                                <canvas id="footprintChart"></canvas>
+                            </div>
+                        </div>
+
+                        <!-- Footprint Trends -->
+                        <div class="bg-white rounded-2xl shadow-sm p-6">
+                            <div class="flex justify-between items-center mb-4">
+                                <h2 class="text-lg font-bold text-gray-900">Weekly Footprint</h2>
+                                <span class="text-sm font-medium text-gray-500" id="weeklyTotal">Total: 45 kg CO₂</span>
+                            </div>
+                            <div class="h-64">
+                                <canvas id="trendChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column: AI & Challenges -->
+                    <div class="space-y-8">
+                        <!-- EcoBot Recommendations -->
+                        <div class="bg-green-50 rounded-2xl p-6 border border-green-100">
+                            <div class="flex items-center mb-4">
+                                <div class="bg-green-100 p-2 rounded-full mr-3">
+                                    <span class="text-xl">🤖</span>
+                                </div>
+                                <h2 class="text-lg font-bold text-green-800">EcoBot AI Coach</h2>
+                            </div>
+                            <div class="space-y-4" id="aiRecommendations">
+                                <!-- Simulated recommendations -->
+                                <div class="bg-white p-4 rounded-xl shadow-sm text-sm text-gray-700">
+                                    <strong>💡 Insight:</strong> Taking the Metro tomorrow instead of driving will save <strong>4.2 kg CO₂</strong>.
+                                </div>
+                                <div class="bg-white p-4 rounded-xl shadow-sm text-sm text-gray-700">
+                                    <strong>⚡ Tip:</strong> You consumed 15% more electricity this week. Try reducing A/C usage during peak hours.
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Active Challenges -->
+                        <div class="bg-white rounded-2xl shadow-sm p-6">
+                            <h2 class="text-lg font-bold text-gray-900 mb-4">Active Challenges</h2>
+                            <div class="space-y-4" id="activeChallenges">
+                                <div class="border border-gray-100 p-4 rounded-xl">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-semibold text-gray-800">Public Transit Hero</h4>
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">+50 pts</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mb-3">Use public transport 3 times this week.</p>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 66%"></div>
+                                    </div>
+                                    <div class="text-right text-xs text-gray-500 mt-1">2 / 3 trips</div>
+                                </div>
+                                
+                                <div class="border border-gray-100 p-4 rounded-xl">
+                                    <div class="flex justify-between items-start mb-2">
+                                        <h4 class="font-semibold text-gray-800">Meatless Monday</h4>
+                                        <span class="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">+30 pts</span>
+                                    </div>
+                                    <p class="text-xs text-gray-500 mb-3">Log a fully vegetarian day.</p>
+                                    <div class="w-full bg-gray-200 rounded-full h-2">
+                                        <div class="bg-green-500 h-2 rounded-full" style="width: 0%"></div>
+                                    </div>
+                                    <div class="text-right text-xs text-gray-500 mt-1">0 / 1 days</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Onboarding Modal -->
+    <div id="onboardingModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl shadow-2xl p-8 max-w-md w-full relative">
+            <div class="text-center mb-6">
+                <div class="bg-green-100 text-green-600 w-16 h-16 rounded-full flex items-center justify-center text-3xl mx-auto mb-4">👋</div>
+                <h2 class="text-2xl font-bold text-gray-900">Let's set up your profile</h2>
+                <p class="text-gray-500 mt-2 text-sm">To give you an accurate baseline score, please tell us about your daily habits.</p>
+            </div>
+            
+            <form id="onboardingForm" class="space-y-5">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">What is your primary diet?</label>
+                    <select id="obDiet" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+                        <option value="Vegetarian">Vegetarian</option>
+                        <option value="Eggetarian">Eggetarian</option>
+                        <option value="Non-Vegetarian">Non-Vegetarian</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">How do you usually commute?</label>
+                    <select id="obCommute" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500" required>
+                        <option value="car">Car</option>
+                        <option value="bike">Motorbike</option>
+                        <option value="bus">Bus</option>
+                        <option value="metro">Metro</option>
+                        <option value="walking">Walking / Cycling</option>
+                    </select>
+                </div>
+                <button id="obSubmitBtn" type="submit" class="w-full bg-green-600 text-white font-semibold py-3 px-4 rounded-xl hover:bg-green-700 transition-colors mt-2 shadow-md">
+                    Complete Setup
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script src="js/search.js"></script>
+</body>
+</html>
