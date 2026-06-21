@@ -1,1 +1,17 @@
-
+body {
+    font-family: 'Inter', sans-serif;
+}
+/* Custom animations or scrollbars */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+::-webkit-scrollbar-thumb {
+    background: #16a34a; 
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #15803d; 
+}
