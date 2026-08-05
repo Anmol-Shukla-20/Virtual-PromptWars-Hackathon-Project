@@ -51,3 +51,15 @@ export default function ChatPage() {
   const saveHistory = (msgs: ChatMessage[]) => {
     localStorage.setItem("ecopath_chat_history", JSON.stringify(msgs));
   };
+
+  const sendMessage = async (text: string) => {
+    if (!text.trim()) return;
+    setSuggestionsVisible(false);
+
+    const userMsg: ChatMessage = { sender: "user", rawText: text };
+    const updated = [...messages, userMsg];
+    setMessages(updated);
+    saveHistory(updated);
+    setInput("");
+    setLoading(true);
+
