@@ -62,4 +62,23 @@ export default function ChatPage() {
     saveHistory(updated);
     setInput("");
     setLoading(true);
-
+    
+    try {
+      const res = await aiApi.chat(text);
+      const botMsg: ChatMessage = { sender: "bot", rawText: res.reply };
+      const final = [...updated, botMsg];
+      setMessages(final);
+      saveHistory(final);
+    } catch (err: unknown) {
+      const errMsg = err instanceof Error ? err.message : "Error connecting to AI";
+      const botMsg: ChatMessage = {
+        sender: "bot",
+        rawText: "Oops, I encountered an error: " + errMsg,
+      };
+      const final = [...updated, botMsg];
+      setMessages(final);
+      saveHistory(final);
+    } finally {
+      setLoading(false);
+    }
+  };
