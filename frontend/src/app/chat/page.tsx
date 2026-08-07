@@ -82,3 +82,24 @@ export default function ChatPage() {
       setLoading(false);
     }
   };
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    sendMessage(input);
+  };
+
+  return (
+    <AuthGuard>
+      <div className="flex h-screen overflow-hidden bg-gray-50">
+        <Sidebar />
+        <main className="flex-1 flex flex-col overflow-hidden">
+          {/* Header */}
+          <div className="bg-white border-b border-gray-100 px-6 py-4 flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-xl">🤖</div>
+            <div>
+              <h1 className="font-bold text-gray-800">EcoBot AI Coach</h1>
+              <p className="text-xs text-green-600 flex items-center gap-1">
+                <span className="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse" /> Online
+              </p>
+            </div>
+          </div>
+
