@@ -102,4 +102,21 @@ export default function ChatPage() {
               </p>
             </div>
           </div>
-
+         
+          {/* Messages area */}
+          <div
+            id="chatMessages"
+            className="flex-1 overflow-y-auto px-4 py-6 space-y-4"
+          >
+            {/* Welcome bubble */}
+            {messages.length === 0 && !loading && (
+              <div className="flex items-start">
+                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-sm mr-3 shrink-0">🤖</div>
+                <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-none p-4 shadow-sm max-w-[80%]">
+                  <p className="text-sm text-gray-800">
+                    👋 Hi! I'm <strong>EcoBot</strong>, your personal AI sustainability coach.
+                    Ask me anything about reducing your carbon footprint!
+                  </p>
+                </div>
+              </div>
+            )}
