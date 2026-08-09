@@ -120,3 +120,48 @@ export default function ChatPage() {
                 </div>
               </div>
             )}
+            
+            {/* Suggestions */}
+            {suggestionsVisible && messages.length === 0 && (
+              <div className="flex flex-wrap gap-2 pl-11">
+                {SUGGESTIONS.map((s) => (
+                  <button
+                    key={s}
+                    className="suggestion-btn text-sm bg-green-50 text-green-700 px-3 py-1.5 rounded-full border border-green-200 hover:bg-green-100 transition-colors"
+                    onClick={() => sendMessage(s)}
+                  >
+                    {s}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {/* Chat messages */}
+            {messages.map((msg, i) => (
+              <div
+                key={i}
+                className={`flex items-start ${msg.sender === "user" ? "flex-row-reverse" : ""}`}
+              >
+                {msg.sender === "bot" ? (
+                  <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-sm mr-3 shrink-0">🤖</div>
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center text-sm ml-3 shrink-0">👤</div>
+                )}
+                <div
+                  className={`p-4 shadow-sm max-w-[80%] ${
+                    msg.sender === "bot"
+                      ? "bg-white border border-gray-200 rounded-2xl rounded-tl-none"
+                      : "bg-green-600 text-white rounded-2xl rounded-tr-none"
+                  }`}
+                >
+                  {msg.sender === "bot" ? (
+                    <p
+                      className="text-sm text-gray-800"
+                      dangerouslySetInnerHTML={{ __html: parseMarkdown(msg.rawText) }}
+                    />
+                  ) : (
+                    <p className="text-sm text-white">{msg.rawText}</p>
+                  )}
+                </div>
+              </div>
+            ))}
