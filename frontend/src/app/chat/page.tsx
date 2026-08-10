@@ -165,3 +165,21 @@ export default function ChatPage() {
                 </div>
               </div>
             ))}
+            
+            {/* Loading indicator */}
+            {loading && (
+              <div className="flex items-start">
+                <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-sm mr-3 shrink-0">🤖</div>
+                <div className="bg-white border border-gray-200 rounded-2xl rounded-tl-none p-4 shadow-sm">
+                  <div className="flex space-x-1 items-center h-4">
+                    {[0, 0.1, 0.2].map((delay, i) => (
+                      <div
+                        key={i}
+                        className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                        style={{ animationDelay: `${delay}s` }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
