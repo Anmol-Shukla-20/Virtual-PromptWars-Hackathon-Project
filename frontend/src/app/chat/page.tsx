@@ -183,3 +183,35 @@ export default function ChatPage() {
                 </div>
               </div>
             )}
+
+            <div ref={bottomRef} />
+          </div>
+
+          {/* Input area */}
+          <form
+            id="chatForm"
+            onSubmit={handleSubmit}
+            className="bg-white border-t border-gray-100 px-4 py-4 flex gap-3 items-end"
+          >
+            <input
+              id="chatInput"
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              disabled={loading}
+              placeholder="Ask EcoBot anything about sustainability…"
+              className="eco-input flex-1 py-3 text-sm disabled:opacity-60"
+            />
+            <button
+              type="submit"
+              disabled={loading || !input.trim()}
+              className="bg-green-600 text-white px-5 py-3 rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50 font-medium text-sm"
+            >
+              Send
+            </button>
+          </form>
+        </main>
+      </div>
+    </AuthGuard>
+  );
+}
