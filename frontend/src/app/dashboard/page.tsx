@@ -20,3 +20,18 @@ import {
   Title,
 } from "chart.js";
 import { Doughnut, Bar } from "react-chartjs-2";
+
+interface SummaryData {
+  breakdown: { transportation: number; electricity: number; lifestyle: number; shopping: number; total: number };
+  trend: { _id: string; dailyTotal: number }[];
+  ecoPoints: number;
+  co2Saved: number;
+  sustainabilityScore: number;
+}
+
+function getLevelFromPoints(points: number): string {
+  if (points > 5000) return "🏆 Planet Protector";
+  if (points > 3000) return "🌳 Carbon Warrior";
+  if (points > 1000) return "🌿 Eco Explorer";
+  return "🌱 Green Beginner";
+}
