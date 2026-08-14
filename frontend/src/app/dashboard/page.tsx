@@ -35,3 +35,21 @@ function getLevelFromPoints(points: number): string {
   if (points > 1000) return "🌿 Eco Explorer";
   return "🌱 Green Beginner";
 }
+
+export default function DashboardPage() {
+  const router = useRouter();
+  const [data, setData] = useState<SummaryData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [obDiet, setObDiet] = useState("Vegetarian");
+  const [obCommute, setObCommute] = useState("metro");
+  const [obLoading, setObLoading] = useState(false);
+
+  useEffect(() => {
+    const profileComplete = localStorage.getItem("profileComplete");
+    if (!profileComplete) {
+      setShowOnboarding(true);
+    } else {
+      loadData();
+    }
+  }, []);
