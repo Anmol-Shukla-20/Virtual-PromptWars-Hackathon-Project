@@ -53,3 +53,39 @@ export default function DashboardPage() {
       loadData();
     }
   }, []);
+  
+  async function loadData() {
+    setLoading(true);
+    try {
+      const result = await trackerApi.getSummary();
+      // Fallback dummy data if DB is empty (preserves hackathon behaviour)
+      if (result.breakdown.total === 0) {
+        result.breakdown = { transportation: 15, electricity: 22, lifestyle: 10, shopping: 0, total: 47 };
+        result.trend = [
+          { _id: new Date(Date.now() - 86400000).toISOString().split("T")[0], dailyTotal: 8 },
+          { _id: new Date().toISOString().split("T")[0], dailyTotal: 15 },
+        ];
+      }
+      setData(result);
+    } catch (err) {
+      console.error("Failed to load dashboard data", err);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleOnboardingSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setObLoading(true);
+    try {
+      await trackerApi.logActivity({ activityType: "lifestyle", dietPreference: obDiet });
+      await trackerApi.logActivity({ activityType: "transportation", mode: obCommute, distance: 0 });
+      localStorage.setItem("profileComplete", "true");
+      setShowOnboarding(false);
+      loadData();
+    } catch (err) {
+      console.error("Onboarding failed", err);
+    } finally {
+      setObLoading(false);
+    }
+  }
