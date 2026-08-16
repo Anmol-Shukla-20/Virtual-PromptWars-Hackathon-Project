@@ -89,3 +89,35 @@ export default function DashboardPage() {
       setObLoading(false);
     }
   }
+
+  const ecoPoints = data?.ecoPoints ?? 0;
+  const userLevel = getLevelFromPoints(ecoPoints);
+  const co2Saved = data?.co2Saved ?? 0;
+  const susScore = data?.sustainabilityScore ?? 0;
+  const globalRank = `#${Math.max(1, Math.floor(10000 / (ecoPoints + 10)))}`;
+
+  return (
+    <AuthGuard>
+      <div className="flex h-screen overflow-hidden bg-gray-50">
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-6xl mx-auto">
+            <h1 className="text-2xl font-bold text-gray-800 mb-6">Dashboard</h1>
+
+            {/* Stat cards */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+              {[
+                { label: "CO₂ Saved", value: `${co2Saved.toFixed(1)} kg`, id: "co2Saved", icon: "🌍", color: "text-green-600" },
+                { label: "EcoPoints", value: ecoPoints, id: "ecoPoints", icon: "⭐", color: "text-yellow-600" },
+                { label: "Your Level", value: userLevel, id: "userLevel", icon: "🏅", color: "text-purple-600" },
+                { label: "Global Rank", value: globalRank, id: "globalRank", icon: "🌐", color: "text-blue-600" },
+              ].map((card) => (
+                <div key={card.id} className="bg-white rounded-2xl shadow-sm p-5 flex items-center gap-4 border border-gray-100">
+                  <div className="text-3xl">{card.icon}</div>
+                  <div>
+                    <p className="text-xs text-gray-500 uppercase tracking-wide">{card.label}</p>
+                    <p id={card.id} className={`text-xl font-bold ${card.color}`}>{card.value}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
