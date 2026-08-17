@@ -121,3 +121,43 @@ export default function DashboardPage() {
                 </div>
               ))}
             </div>
+
+            {/* Sustainability Score */}
+            <div className="bg-white rounded-2xl shadow-sm p-5 border border-gray-100 mb-8">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-gray-600">Sustainability Score</span>
+                <span id="susScore" className="text-sm font-bold text-green-600">{susScore}/100</span>
+              </div>
+              <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
+                <div
+                  className="h-2.5 bg-green-500 rounded-full transition-all duration-700"
+                  style={{ width: `${susScore}%` }}
+                />
+              </div>
+            </div>
+
+            {/* Charts */}
+            {loading ? (
+              <div className="flex justify-center py-16">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-green-600" />
+              </div>
+            ) : data ? (
+              <div id="chartsGrid" className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="bg-white rounded-2xl shadow-sm p-5 border border-gray-100">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-4">Footprint Breakdown</h3>
+                  <div style={{ height: 240 }}>
+                    <Doughnut
+                      id="footprintChart"
+                      data={{
+                        labels: ["Transport", "Electricity", "Diet", "Shopping"],
+                        datasets: [{
+                          data: [data.breakdown.transportation, data.breakdown.electricity, data.breakdown.lifestyle, data.breakdown.shopping],
+                          backgroundColor: ["#3b82f6", "#eab308", "#22c55e", "#a855f7"],
+                          borderWidth: 0,
+                        }],
+                      }}
+                      options={{ responsive: true, maintainAspectRatio: false, plugins: { legend: { position: "right" } } }}
+                    />
+                  </div>
+                </div>
+
