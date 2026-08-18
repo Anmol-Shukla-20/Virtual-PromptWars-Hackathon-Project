@@ -160,4 +160,34 @@ export default function DashboardPage() {
                     />
                   </div>
                 </div>
+                <div className="bg-white rounded-2xl shadow-sm p-5 border border-gray-100">
+                  <h3 className="text-sm font-semibold text-gray-700 mb-1">Weekly Trend</h3>
+                  <p id="weeklyTotal" className="text-xs text-gray-400 mb-4">
+                    Total: {data.breakdown.total.toFixed(1)} kg CO₂
+                  </p>
+                  <div style={{ height: 240 }}>
+                    <Bar
+                      id="trendChart"
+                      data={{
+                        labels: data.trend.length ? data.trend.map((t) => t._id) : ["Today"],
+                        datasets: [{
+                          label: "Daily Emissions (kg CO₂)",
+                          data: data.trend.length ? data.trend.map((t) => t.dailyTotal) : [0],
+                          backgroundColor: "#16a34a",
+                          borderRadius: 4,
+                        }],
+                      }}
+                      options={{ responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true } } }}
+                    />
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <div id="emptyStateContainer" className="text-center text-gray-400 py-16">
+                No data yet. <a href="/log" className="text-green-600 underline">Log your first activity!</a>
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
 
