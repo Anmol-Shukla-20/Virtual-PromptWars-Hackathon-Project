@@ -191,3 +191,53 @@ export default function DashboardPage() {
         </main>
       </div>
 
+      {/* Onboarding Modal */}
+      {showOnboarding && (
+        <div id="onboardingModal" className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-xl p-8 w-full max-w-md">
+            <h2 className="text-2xl font-bold text-gray-800 mb-1">Welcome to EcoPath AI! 🌿</h2>
+            <p className="text-gray-500 text-sm mb-6">Let's set up your baseline so we can track your progress accurately.</p>
+            <form id="onboardingForm" onSubmit={handleOnboardingSubmit} className="space-y-5">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">What's your primary diet? 🥗</label>
+                <select
+                  id="obDiet"
+                  value={obDiet}
+                  onChange={(e) => setObDiet(e.target.value)}
+                  className="eco-input"
+                >
+                  <option value="Vegetarian">Vegetarian</option>
+                  <option value="Eggetarian">Eggetarian</option>
+                  <option value="Non-Vegetarian">Non-Vegetarian</option>
+                </select>
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">How do you usually commute? 🚗</label>
+                <select
+                  id="obCommute"
+                  value={obCommute}
+                  onChange={(e) => setObCommute(e.target.value)}
+                  className="eco-input"
+                >
+                  <option value="car">Car</option>
+                  <option value="metro">Metro / Train</option>
+                  <option value="bus">Bus</option>
+                  <option value="cycling">Cycling</option>
+                  <option value="walking">Walking</option>
+                </select>
+              </div>
+              <button
+                id="obSubmitBtn"
+                type="submit"
+                disabled={obLoading}
+                className="w-full bg-green-600 text-white font-semibold py-2.5 rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50"
+              >
+                {obLoading ? "Setting up…" : "Get Started 🚀"}
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
+    </AuthGuard>
+  );
+}
