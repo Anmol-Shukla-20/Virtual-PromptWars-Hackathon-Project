@@ -91,3 +91,49 @@ export default function LogPage() {
               ))}
             </div>
 
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              {/* Transportation Form */}
+              {activeTab === "transportation" && (
+                <form
+                  id="transportForm"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitLog(
+                      { activityType: "transportation", mode: transportMode, distance: parseFloat(transportDistance), isRenewableEV: evRenewable },
+                      () => { setTransportDistance(""); setEvRenewable(false); }
+                    );
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Mode of Transport</label>
+                    <select
+                      id="transportMode"
+                      value={transportMode}
+                      onChange={(e) => setTransportMode(e.target.value)}
+                      className="eco-input"
+                    >
+                      <option value="car">🚗 Car</option>
+                      <option value="bus">🚌 Bus</option>
+                      <option value="metro">🚇 Metro</option>
+                      <option value="motorbike">🏍️ Motorbike</option>
+                      <option value="scooty">🛵 Scooty</option>
+                      <option value="cycling">🚲 Cycling</option>
+                      <option value="walking">🚶 Walking</option>
+                      <option value="ev">🔋 Electric Vehicle</option>
+                      <option value="carpool">🚐 Carpool</option>
+                    </select>
+                  </div>
+                  {transportMode === "ev" && (
+                    <div id="evCheckboxContainer" className="flex items-center gap-2">
+                      <input
+                        id="evRenewable"
+                        type="checkbox"
+                        checked={evRenewable}
+                        onChange={(e) => setEvRenewable(e.target.checked)}
+                        className="w-4 h-4 accent-green-600"
+                      />
+                      <label htmlFor="evRenewable" className="text-sm text-gray-700">Charged with renewable energy?</label>
+                    </div>
+                  )}
+
