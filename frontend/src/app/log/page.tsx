@@ -137,3 +137,56 @@ export default function LogPage() {
                     </div>
                   )}
 
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Distance (km)</label>
+                    <input
+                      id="transportDistance"
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      value={transportDistance}
+                      onChange={(e) => setTransportDistance(e.target.value)}
+                      required
+                      className="eco-input"
+                      placeholder="e.g. 12.5"
+                    />
+                  </div>
+                  <button type="submit" disabled={loading} className="w-full bg-green-600 text-white font-semibold py-2.5 rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50">
+                    {loading ? "Logging…" : "Log Trip"}
+                  </button>
+                </form>
+              )}
+
+              {/* Electricity Form */}
+              {activeTab === "electricity" && (
+                <form
+                  id="electricityForm"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitLog(
+                      { activityType: "electricity", unitsConsumed: parseFloat(electricityUnits) },
+                      () => setElectricityUnits("")
+                    );
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Units Consumed (kWh)</label>
+                    <input
+                      id="electricityUnits"
+                      type="number"
+                      min="0"
+                      step="0.1"
+                      value={electricityUnits}
+                      onChange={(e) => setElectricityUnits(e.target.value)}
+                      required
+                      className="eco-input"
+                      placeholder="e.g. 5"
+                    />
+                  </div>
+                  <button type="submit" disabled={loading} className="w-full bg-green-600 text-white font-semibold py-2.5 rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50">
+                    {loading ? "Logging…" : "Log Electricity"}
+                  </button>
+                </form>
+              )}
+
