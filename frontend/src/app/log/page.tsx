@@ -190,3 +190,31 @@ export default function LogPage() {
                 </form>
               )}
 
+              {/* Lifestyle Form */}
+              {activeTab === "lifestyle" && (
+                <form
+                  id="lifestyleForm"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitLog({ activityType: "lifestyle", dietPreference }, () => {});
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Diet Preference Today</label>
+                    <select
+                      id="dietPreference"
+                      value={dietPreference}
+                      onChange={(e) => setDietPreference(e.target.value)}
+                      className="eco-input"
+                    >
+                      <option value="Vegetarian">🥦 Vegetarian</option>
+                      <option value="Eggetarian">🥚 Eggetarian</option>
+                      <option value="Non-Vegetarian">🍗 Non-Vegetarian</option>
+                    </select>
+                  </div>
+                  <button type="submit" disabled={loading} className="w-full bg-green-600 text-white font-semibold py-2.5 rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50">
+                    {loading ? "Logging…" : "Log Diet"}
+                  </button>
+                </form>
+              )}
