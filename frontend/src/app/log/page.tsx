@@ -218,3 +218,31 @@ export default function LogPage() {
                   </button>
                 </form>
               )}
+              {/* Shopping Form */}
+              {activeTab === "shopping" && (
+                <form
+                  id="shoppingForm"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                    submitLog({ activityType: "shopping", shoppingFrequency }, () => {});
+                  }}
+                  className="space-y-4"
+                >
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Shopping Frequency This Week</label>
+                    <select
+                      id="shoppingFrequency"
+                      value={shoppingFrequency}
+                      onChange={(e) => setShoppingFrequency(e.target.value)}
+                      className="eco-input"
+                    >
+                      <option value="low">🟢 Low (rarely)</option>
+                      <option value="medium">🟡 Medium (sometimes)</option>
+                      <option value="high">🔴 High (frequently)</option>
+                    </select>
+                  </div>
+                  <button type="submit" disabled={loading} className="w-full bg-green-600 text-white font-semibold py-2.5 rounded-xl hover:bg-green-700 transition-colors disabled:opacity-50">
+                    {loading ? "Logging…" : "Log Shopping"}
+                  </button>
+                </form>
+              )}
