@@ -246,3 +246,23 @@ export default function LogPage() {
                   </button>
                 </form>
               )}
+              {/* Feedback */}
+              {feedback && (
+                <div
+                  id="logFeedback"
+                  className={`mt-4 p-4 rounded-xl text-sm font-medium border ${
+                    feedback.type === "success"
+                      ? "bg-green-50 text-green-800 border-green-200"
+                      : "bg-red-50 text-red-800 border-red-200"
+                  }`}
+                >
+                  {feedback.message}
+                </div>
+              )}
+            </div>
+          </div>
+        </main>
+      </div>
+    </AuthGuard>
+  );
+}
