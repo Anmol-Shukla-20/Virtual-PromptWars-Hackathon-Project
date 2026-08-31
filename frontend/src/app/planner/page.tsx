@@ -102,3 +102,69 @@ export default function PlannerPage() {
               </div>
             </form>
 
+            {results && (
+              <div id="resultsSection">
+                <h2 className="text-lg font-semibold text-gray-700 mb-4">
+                  Available Options for {parseFloat(distance).toFixed(1)} km
+                </h2>
+                <div id="optionsContainer" className="space-y-3">
+                  {results.map((opt) => {
+                    const isGreenest = opt.mode === greenest?.mode;
+                    const isFastest = opt.mode === fastest?.mode;
+                    const isCheapest = opt.mode === cheapest?.mode;
+
+                    return (
+                      <div
+                        key={opt.mode}
+                        className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow flex flex-col md:flex-row md:items-center justify-between gap-4"
+                      >
+                        <div className="flex items-center gap-4">
+                          <div className="text-4xl">{opt.icon}</div>
+                          <div>
+                            <div className="flex items-center flex-wrap gap-1">
+                              <h4 className="font-bold text-gray-900 text-lg">{opt.name}</h4>
+                              {isGreenest && (
+                                <span className="bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full font-medium">
+                                  🌱 Greenest
+                                </span>
+                              )}
+                              {isFastest && (
+                                <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full font-medium">
+                                  ⚡ Fastest
+                                </span>
+                              )}
+                              {isCheapest && (
+                                <span className="bg-yellow-100 text-yellow-800 text-xs px-2 py-1 rounded-full font-medium">
+                                  💰 Cheapest
+                                </span>
+                              )}
+                            </div>
+                            <div className="text-sm text-gray-500 mt-1">
+                              ⏱️ {formatTime(opt.timeMins)} • 💵 ₹{opt.cost.toFixed(2)}
+                            </div>
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-sm text-gray-500 mb-1">Carbon Footprint</div>
+                          <div
+                            className={`text-xl font-bold ${
+                              opt.emission === 0 ? "text-green-600" : "text-gray-900"
+                            }`}
+                          >
+                            {opt.emission.toFixed(2)}{" "}
+                            <span className="text-sm font-medium text-gray-500">kg CO₂</span>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+          </div>
+        </main>
+      </div>
+    </AuthGuard>
+  );
+}
+
