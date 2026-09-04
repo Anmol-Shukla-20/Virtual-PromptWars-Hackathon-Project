@@ -168,3 +168,36 @@ export default function ProfilePage() {
                   </div>
                 </div>
               </div>
+
+              {/* Eco Goals */}
+              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <h2 className="text-base font-semibold text-gray-700 mb-4">Eco Goals 🎯</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      CO₂ Reduction Goal (kg/month)
+                    </label>
+                    <input
+                      id="profGoalCo2"
+                      type="number"
+                      value={profile.goalCo2}
+                      onChange={handleChange("goalCo2")}
+                      className={inputClass}
+                      placeholder="50"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      EcoPoints Goal (monthly)
+                    </label>
+                    <input
+                      id="profGoalPts"
+                      type="number"
+                      value={profile.goalPts}
+                      onChange={handleChange("goalPts")}
+                      className={inputClass}
+                      placeholder="500"
+                    />
+                  </div>
+                </div>
+              </div>
