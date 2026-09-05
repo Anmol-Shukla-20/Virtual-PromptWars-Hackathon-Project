@@ -201,3 +201,28 @@ export default function ProfilePage() {
                   </div>
                 </div>
               </div>
+              
+              {/* Save button + feedback */}
+              <div className="flex items-center gap-4">
+                <button
+                  type="submit"
+                  className="bg-green-600 text-white font-semibold px-6 py-2.5 rounded-xl hover:bg-green-700 transition-colors"
+                >
+                  Save Profile
+                </button>
+                <span
+                  id="saveFeedback"
+                  className={`text-green-600 text-sm font-medium transition-opacity duration-500 ${
+                    saved ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  ✅ Profile saved!
+                </span>
+              </div>
+            </form>
+          </div>
+        </main>
+      </div>
+    </AuthGuard>
+  );
+}
