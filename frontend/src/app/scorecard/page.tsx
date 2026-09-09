@@ -95,4 +95,41 @@ export default function ScoreboardPage() {
     }
   }
 
+  // Build full leaderboard merging current user
+  const myName = (() => {
+    try {
+      const stored = localStorage.getItem("user");
+      return stored ? JSON.parse(stored).fullName ?? "You" : "You";
+    } catch {
+      return "You";
+    }
+  })();
+
+  const myLevel = getLevelFromPoints(myPoints);
+  const allUsers: LeaderboardUser[] = [
+    ...DUMMY_USERS,
+    { name: myName, level: myLevel, co2: myCo2, points: myPoints, isMe: true },
+  ].sort((a, b) => b.points - a.points);
+
+  const activitiesForDay = selectedDay
+    ? allActivities.filter((a) => a.date && a.date.startsWith(selectedDay.date))
+    : [];
+
+  function activityIcon(type: string) {
+    if (type === "transportation") return "🚴";
+    if (type === "electricity") return "⚡";
+    if (type === "lifestyle") return "🥗";
+    if (type === "shopping") return "🛍️";
+    return "📝";
+  }
+
+  function activityDesc(a: ActivityRecord) {
+    if (a.activityType === "transportation") return `${a.mode} (${a.distance} km)`;
+    if (a.activityType === "electricity") return `${a.unitsConsumed} kWh used`;
+    if (a.activityType === "lifestyle") return `${a.dietPreference} Diet`;
+    if (a.activityType === "shopping") return `${a.shoppingFrequency} Frequency`;
+    return a.activityType;
+  }
+
+
 
