@@ -131,5 +131,59 @@ export default function ScoreboardPage() {
     return a.activityType;
   }
 
+  const rankBadge = (rank: number, isMe: boolean, points: number) => {
+    if (isMe && points === 0) return <span className="text-xs font-bold text-gray-400">Unranked</span>;
+    if (rank === 1) return <span className="text-2xl">🥇</span>;
+    if (rank === 2) return <span className="text-2xl">🥈</span>;
+    if (rank === 3) return <span className="text-2xl">🥉</span>;
+    return <span className="font-bold text-gray-500">#{rank}</span>;
+  };
+
+  return (
+    <AuthGuard>
+      <div className="flex h-screen overflow-hidden bg-gray-50">
+        <Sidebar />
+        <main className="flex-1 overflow-y-auto p-6">
+          <div className="max-w-5xl mx-auto space-y-6">
+            <h1 className="text-2xl font-bold text-gray-800">Scoreboard 🏆</h1>
+
+            {/* Weekly Points Bar Chart */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-base font-semibold text-gray-700">Your Weekly EcoPoints</h2>
+                <span id="totalWeeklyPoints" className="text-xl font-bold text-yellow-600">{totalWeeklyPoints} pts</span>
+              </div>
+
+              {loading ? (
+                <div className="flex justify-center py-8">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-green-600" />
+                </div>
+              ) : dailyBars.length === 0 ? (
+                <p id="weeklyPointsContainer" className="text-sm text-gray-400 text-center py-8">No data to display yet.</p>
+              ) : (
+                <div id="weeklyPointsContainer" className="flex items-end justify-around gap-2 h-40">
+                  {dailyBars.map((bar) => {
+                    const maxPts = Math.max(...dailyBars.map((b) => b.pts));
+                    const heightPct = Math.max(10, (bar.pts / maxPts) * 100);
+                    return (
+                      <button
+                        key={bar.date}
+                        onClick={() => setSelectedDay(bar)}
+                        className="flex flex-col items-center w-full max-w-[40px] group cursor-pointer hover:bg-gray-50 rounded-lg p-1 transition-colors"
+                      >
+                        <span className="text-xs font-bold text-green-700 mb-1">{bar.pts}</span>
+                        <div
+                          className="w-full bg-green-200 rounded-t-md group-hover:bg-green-400 transition-colors"
+                          style={{ height: `${heightPct}%` }}
+                        />
+                        <span className="text-xs font-medium text-gray-500 mt-2">{bar.dayName}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+
 
 
