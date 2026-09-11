@@ -184,6 +184,46 @@ export default function ScoreboardPage() {
               )}
             </div>
 
+            {/* Daily Activity Details */}
+            {selectedDay && (
+              <div id="dailyActivityDetails" className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
+                <div className="flex justify-between items-center mb-4">
+                  <div>
+                    <h3 id="selectedDayTitle" className="text-sm font-semibold text-gray-700">
+                      Activities for {selectedDay.dayName}, {selectedDay.date}
+                    </h3>
+                    <span id="selectedDayPoints" className="text-xs text-yellow-600 font-bold">{selectedDay.pts} pts</span>
+                  </div>
+                  <button onClick={() => setSelectedDay(null)} className="text-gray-400 hover:text-gray-600 text-xl">✕</button>
+                </div>
+                <div id="activityList" className="space-y-2">
+                  {activitiesForDay.length === 0 ? (
+                    <p className="text-sm text-gray-500 italic">No detailed activity logs found for this day.</p>
+                  ) : (
+                    activitiesForDay.map((act, i) => (
+                      <div key={i} className="flex items-center gap-3 bg-gray-50 p-3 rounded-lg border border-gray-100">
+                        <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-sm border border-gray-100 text-sm">
+                          {activityIcon(act.activityType)}
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-sm font-medium text-gray-800 capitalize">{act.activityType}</div>
+                          <div className="text-xs text-gray-500 capitalize">{activityDesc(act)}</div>
+                        </div>
+                        <div className="text-right">
+                          <div className="text-xs text-gray-400">
+                            {new Date(act.date).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                          </div>
+                          {act.carbonEmission === 0 && (
+                            <span className="text-green-600 text-xs font-bold">+ Points</span>
+                          )}
+                        </div>
+                      </div>
+                    ))
+                  )}
+                </div>
+              </div>
+            )}
+
 
 
 
