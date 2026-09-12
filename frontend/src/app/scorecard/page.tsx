@@ -224,6 +224,53 @@ export default function ScoreboardPage() {
               </div>
             )}
 
+            {/* Leaderboard Table */}
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 overflow-x-auto">
+              <h2 className="text-base font-semibold text-gray-700 mb-4">Global Leaderboard</h2>
+              {myPoints === 0 && (
+                <div id="unrankedBanner" className="mb-4 p-3 bg-yellow-50 text-yellow-800 text-sm rounded-lg border border-yellow-200">
+                  You are currently unranked. Log activities to earn EcoPoints and claim your spot! 🌿
+                </div>
+              )}
+              <table className="w-full">
+                <thead>
+                  <tr className="text-xs text-gray-400 uppercase tracking-wider border-b border-gray-100">
+                    <th className="p-4 text-center">Rank</th>
+                    <th className="p-4 text-left">User</th>
+                    <th className="p-4 text-center">Level</th>
+                    <th className="p-4 text-right">CO₂ Saved</th>
+                    <th className="p-4 text-right">EcoPoints</th>
+                  </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                  {allUsers.map((user, index) => (
+                    <tr
+                      key={index}
+                      className={`border-b border-gray-100 hover:bg-gray-50 transition-colors ${
+                        user.isMe ? "bg-green-50/50" : ""
+                      }`}
+                    >
+                      <td className="p-4 text-center">{rankBadge(index + 1, !!user.isMe, user.points)}</td>
+                      <td className={`p-4 font-medium ${user.isMe ? "text-green-700 font-bold" : "text-gray-800"}`}>
+                        {user.name}
+                      </td>
+                      <td className="p-4 text-center text-sm">
+                        <span className="px-3 py-1 bg-gray-100 rounded-full text-gray-700">{user.level}</span>
+                      </td>
+                      <td className="p-4 text-right font-medium text-gray-700">{user.co2} kg</td>
+                      <td className="p-4 text-right font-bold text-yellow-600">{user.points}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </main>
+      </div>
+    </AuthGuard>
+  );
+}
+
 
 
 
