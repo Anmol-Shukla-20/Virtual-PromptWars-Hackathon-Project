@@ -53,3 +53,28 @@ export default function SearchModal({ isOpen, onClose }: Props) {
     }
   }, [isOpen]);
 
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (!isOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setSelectedIndex((i) => Math.min(i + 1, results.length - 1));
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setSelectedIndex((i) => Math.max(i - 1, 0));
+      } else if (e.key === "Enter") {
+        e.preventDefault();
+        if (results[selectedIndex]) {
+          router.push(results[selectedIndex].href);
+          onClose();
+        }
+      } else if (e.key === "Escape") {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [isOpen, results, selectedIndex, router, onClose]);
+
