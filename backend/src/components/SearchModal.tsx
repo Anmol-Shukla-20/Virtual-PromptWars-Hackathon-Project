@@ -78,3 +78,40 @@ export default function SearchModal({ isOpen, onClose }: Props) {
     return () => window.removeEventListener("keydown", handler);
   }, [isOpen, results, selectedIndex, router, onClose]);
 
+  // Reset selection when results change
+  useEffect(() => setSelectedIndex(0), [query]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div
+      className="fixed inset-0 z-[100] flex items-start justify-center pt-20 sm:pt-24 pb-4 px-4 bg-gray-900/50 backdrop-blur-sm"
+      onClick={(e) => e.target === e.currentTarget && onClose()}
+    >
+      <div className="w-full max-w-2xl bg-white rounded-2xl shadow-2xl overflow-hidden">
+        {/* Search input */}
+        <div className="relative flex items-center px-4 border-b border-gray-100">
+          <svg className="w-6 h-6 text-gray-400 absolute left-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+          <input
+            ref={inputRef}
+            type="text"
+            id="globalSearchInput"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            className="w-full pl-12 pr-4 py-5 text-lg text-gray-900 bg-transparent border-none focus:outline-none placeholder-gray-400"
+            placeholder="Search pages, activities, features..."
+            autoComplete="off"
+          />
+          <button
+            id="closeSearchModalBtn"
+            onClick={onClose}
+            className="p-2 text-gray-400 hover:text-gray-600 rounded-lg"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
