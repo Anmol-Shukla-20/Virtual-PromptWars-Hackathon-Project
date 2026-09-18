@@ -115,3 +115,36 @@ export default function SearchModal({ isOpen, onClose }: Props) {
           </button>
         </div>
 
+        {/* Results */}
+        <div className="max-h-96 overflow-y-auto p-2" id="searchResultsContainer">
+          {results.length === 0 ? (
+            <div className="px-6 py-8 text-center text-gray-500">
+              No matching features found for &quot;{query}&quot;
+            </div>
+          ) : (
+            results.map((item, index) => (
+              <button
+                key={`${item.href}-${index}`}
+                id={`search-result-${index}`}
+                onClick={() => { router.push(item.href); onClose(); }}
+                onMouseEnter={() => setSelectedIndex(index)}
+                className={`w-full flex items-center p-4 rounded-xl cursor-pointer transition-colors text-left ${
+                  index === selectedIndex
+                    ? "bg-green-50 border-l-4 border-green-500"
+                    : "hover:bg-gray-50 border-l-4 border-transparent"
+                }`}
+              >
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center text-xl mr-4">
+                  {item.icon}
+                </div>
+                <div>
+                  <h4 className={`text-sm font-semibold ${index === selectedIndex ? "text-green-800" : "text-gray-900"}`}>
+                    {item.title}
+                  </h4>
+                  <p className="text-xs text-gray-500 mt-0.5">{item.description}</p>
+                </div>
+              </button>
+            ))
+          )}
+        </div>
+
