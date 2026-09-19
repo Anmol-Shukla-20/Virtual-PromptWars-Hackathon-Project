@@ -148,3 +148,14 @@ export default function SearchModal({ isOpen, onClose }: Props) {
           )}
         </div>
 
+        {/* Footer */}
+        <div className="px-4 py-3 bg-gray-50 text-xs text-gray-500 border-t border-gray-100 flex justify-between">
+          <span>Use <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded font-sans">↑</kbd> <kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded font-sans">↓</kbd> to navigate</span>
+          <span><kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded font-sans">Enter</kbd> to select</span>
+          <span><kbd className="px-1.5 py-0.5 bg-white border border-gray-200 rounded font-sans">Esc</kbd> to close</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
