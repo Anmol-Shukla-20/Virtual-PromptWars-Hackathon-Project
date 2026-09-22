@@ -48,3 +48,31 @@ export default function Sidebar() {
     localStorage.removeItem("profileComplete");
     router.push("/");
   };
+
+  const navLinks = [
+    { href: "/dashboard", label: "Dashboard", icon: "📊" },
+    { href: "/log", label: "Log Activity", icon: "📝" },
+    { href: "/planner", label: "Route Planner", icon: "🗺️" },
+    { href: "/chat", label: "EcoBot AI", icon: "🤖" },
+    { href: "/scoreboard", label: "Scoreboard", icon: "🏆" },
+    { href: "/profile", label: "My Profile", icon: "👤" },
+  ];
+
+  const initial = user?.fullName?.charAt(0).toUpperCase() ?? "U";
+
+  return (
+    <>
+      {/* Mobile top bar */}
+      <div className="md:hidden flex items-center justify-between bg-white border-b border-gray-200 px-4 py-3">
+        <span className="text-xl font-bold text-green-600">🌿 EcoPath AI</span>
+        <button
+          onClick={() => setSidebarOpen(!sidebarOpen)}
+          className="p-2 rounded-lg text-gray-500 hover:bg-gray-100"
+          aria-label="Toggle menu"
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
