@@ -105,4 +105,24 @@ export default function Sidebar() {
           </button>
         </div>
 
-
+        {/* Nav links */}
+        <nav className="flex-1 px-4 py-4 space-y-1">
+          {navLinks.map((link) => {
+            const active = pathname === link.href;
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                onClick={() => setSidebarOpen(false)}
+                className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors ${
+                  active
+                    ? "bg-green-50 text-green-700 font-semibold"
+                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                }`}
+              >
+                <span className="text-lg">{link.icon}</span>
+                {link.label}
+              </Link>
+            );
+          })}
+        </nav>
