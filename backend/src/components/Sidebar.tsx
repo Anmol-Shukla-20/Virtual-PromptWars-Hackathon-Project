@@ -126,3 +126,38 @@ export default function Sidebar() {
             );
           })}
         </nav>
+
+        {/* User section */}
+        <div className="p-4 border-t border-gray-100">
+          <div className="relative">
+            <button
+              id="profileDropdownBtn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setDropdownOpen(!dropdownOpen);
+              }}
+              className="flex items-center gap-3 w-full p-2 rounded-xl hover:bg-gray-50 transition-colors"
+            >
+              <div
+                id="userAvatarInitial"
+                className="w-9 h-9 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0"
+              >
+                {initial}
+              </div>
+              <div className="flex-1 text-left overflow-hidden">
+                <p className="text-sm font-semibold text-gray-800 truncate">{user?.fullName ?? "User"}</p>
+                <p className="text-xs text-gray-400 truncate">{user?.email ?? ""}</p>
+              </div>
+            </button>
+
+            {dropdownOpen && (
+              <div
+                id="profileDropdown"
+                className="absolute bottom-full mb-2 left-0 w-full bg-white border border-gray-200 rounded-xl shadow-lg z-50 py-1"
+              >
+                <Link
+                  href="/profile"
+                  onClick={() => setDropdownOpen(false)}
+                  className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50"
+                >
+        
