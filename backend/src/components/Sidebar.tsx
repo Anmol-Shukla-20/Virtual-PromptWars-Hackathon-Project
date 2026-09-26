@@ -160,4 +160,33 @@ export default function Sidebar() {
                   onClick={() => setDropdownOpen(false)}
                   className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50"
                 >
+                  👤 My Profile
+                </Link>
+                <button
+                  id="dropdownLogoutBtn"
+                  onClick={handleLogout}
+                  className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50"
+                >
+                  🚪 Logout
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      </aside>
+
+      {/* Overlay for mobile sidebar */}
+      {sidebarOpen && (
+        <div
+          className="md:hidden fixed inset-0 bg-black/30 z-30"
+          onClick={() => setSidebarOpen(false)}
+        />
+      )}
+
+      {/* Global search modal */}
+      <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
+    </>
+  );
+}
+
         
