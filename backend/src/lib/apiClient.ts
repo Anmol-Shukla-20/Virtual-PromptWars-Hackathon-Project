@@ -48,3 +48,33 @@ export const authApi = {
       body: JSON.stringify({ email }),
     }),
 };
+
+// Tracker endpoints
+export const trackerApi = {
+  logActivity: (data: Record<string, unknown>) =>
+    request<{ message: string; activity: Record<string, unknown>; co2Saved: number; earnedPoints: number }>('/tracker/log', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
+
+  getSummary: () =>
+    request<{
+      breakdown: { transportation: number; electricity: number; lifestyle: number; shopping: number; total: number };
+      trend: { _id: string; dailyTotal: number }[];
+      ecoPoints: number;
+      co2Saved: number;
+      sustainabilityScore: number;
+    }>('/tracker/summary'),
+
+  getActivities: () => request<Record<string, unknown>[]>('/tracker/activities'),
+};
+
+// AI endpoint
+export const aiApi = {
+  chat: (message: string) =>
+    request<{ reply: string }>('/ai/chat', {
+      method: 'POST',
+      body: JSON.stringify({ message }),
+    }),
+};
+
