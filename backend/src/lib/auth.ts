@@ -21,3 +21,13 @@ export function verifyAuth(req: NextRequest): JwtPayload {
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     throw new Error('No token, authorization denied');
   }
+
+  const token = authHeader.split(' ')[1];
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+    return decoded;
+  } catch {
+    throw new Error('Token is not valid');
+  }
+}
