@@ -12,3 +12,16 @@ export const EMISSION_FACTORS = {
     walking: 0,
     cycling: 0,
   },
+
+  electricity: 0.82, // kg CO2 per kWh
+  diet: {
+    Vegetarian: 1.5,    // kg CO2 per day
+    Eggetarian: 2.0,
+    'Non-Vegetarian': 3.3,
+  },
+  shopping: {
+    low: 5,    // kg CO2 per month
+    medium: 15,
+    high: 30,
+  },
+};
