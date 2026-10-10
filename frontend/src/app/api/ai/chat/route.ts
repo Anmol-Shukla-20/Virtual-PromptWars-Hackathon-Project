@@ -42,3 +42,13 @@ Keep your responses concise, highly motivating, and highly actionable. Format ni
 The user ${user?.fullName ?? 'User'} has just signed up and hasn't logged any activities yet.
 Your goal is to warmly welcome them, introduce yourself, and ask them a simple engaging question to help them start tracking their carbon footprint. Keep it friendly, concise, and under 2 short paragraphs.`;
     }
+
+      const reply = await getGroqChatCompletion(systemPrompt, message);
+    return NextResponse.json({ reply });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Server error';
+    const status = message.includes('token') || message.includes('authorization') ? 401 : 500;
+    console.error('AI Chat Error:', message);
+    return NextResponse.json({ error: message }, { status });
+  }
+}
