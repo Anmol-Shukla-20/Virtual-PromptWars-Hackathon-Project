@@ -53,3 +53,20 @@ export async function POST(req: NextRequest) {
       } else if (lowerMode === 'motorbike') {
         sustainScoreDelta = -3;
       }
+
+      sustainScoreDelta = Math.max(-3, Math.min(5, sustainScoreDelta));
+      if (sustainScoreDelta > 0) earnedPoints = sustainScoreDelta * 2;
+
+      const worstEmission = (distance ?? 0) * EMISSION_FACTORS.transportation.car;
+      if (worstEmission > carbonEmission) {
+        co2Saved = worstEmission - carbonEmission;
+      }
+    } else if (activityType === 'electricity') {
+      carbonEmission = (unitsConsumed ?? 0) * EMISSION_FACTORS.electricity;
+    } else if (activityType === 'lifestyle') {
+      const factor = EMISSION_FACTORS.diet[dietPreference as keyof typeof EMISSION_FACTORS.diet] ?? 0;
+      carbonEmission = factor;
+    } else if (activityType === 'shopping') {
+      const factor = EMISSION_FACTORS.shopping[shoppingFrequency as keyof typeof EMISSION_FACTORS.shopping] ?? 0;
+      carbonEmission = factor;
+    }
