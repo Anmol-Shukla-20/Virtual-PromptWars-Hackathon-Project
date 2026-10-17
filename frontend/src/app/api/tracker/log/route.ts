@@ -70,3 +70,27 @@ export async function POST(req: NextRequest) {
       const factor = EMISSION_FACTORS.shopping[shoppingFrequency as keyof typeof EMISSION_FACTORS.shopping] ?? 0;
       carbonEmission = factor;
     }
+
+    const activity = await Activity.create({
+      user: userId,
+      activityType,
+      mode,
+      distance,
+      unitsConsumed,
+      billAmount,
+      dietPreference,
+      shoppingFrequency,
+      carbonEmission,
+      date: date ? new Date(date) : new Date(),
+    });
+
+    // Update user stats
+    const userDoc = await User.findById(userId);
+    if (userDoc) {
+      userDoc.ecoPoints = (userDoc.ecoPoints ?? 0) + (earnedPoints ?? 0);
+      userDoc.totalCo2Saved = (userDoc.totalCo2Saved ?? 0) + (co2Saved ?? 0);
+      let newScore = (userDoc.sustainabilityScore ?? 0) + sustainScoreDelta;
+      newScore = Math.max(0, Math.min(100, newScore));
+      userDoc.sustainabilityScore = newScore;
+      await userDoc.save();
+    }
