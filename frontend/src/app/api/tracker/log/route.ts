@@ -94,3 +94,12 @@ export async function POST(req: NextRequest) {
       userDoc.sustainabilityScore = newScore;
       await userDoc.save();
     }
+
+    return NextResponse.json({ message: 'Activity logged successfully', activity, co2Saved, earnedPoints }, { status: 201 });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Server error';
+    const status = message.includes('token') || message.includes('authorization') ? 401 : 500;
+    console.error('Log Activity Error:', message);
+    return NextResponse.json({ error: message }, { status });
+  }
+}
