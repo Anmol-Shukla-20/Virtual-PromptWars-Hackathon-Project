@@ -1,0 +1,11 @@
+import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
+import connectToDb from '@/lib/mongodb';
+import Activity from '@/models/Activity';
+import User from '@/models/User';
+import { verifyAuth } from '@/lib/auth';import { NextRequest, NextResponse } from 'next/server';
+import mongoose from 'mongoose';
+import connectToDb from '@/lib/mongodb';
+import Activity from '@/models/Activity';
+import User from '@/models/User';
+import { verifyAuth } from '@/lib/auth';
