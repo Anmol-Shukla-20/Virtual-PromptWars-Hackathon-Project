@@ -20,3 +20,24 @@ export async function GET(req: NextRequest) {
     const summary = { transportation: 0, electricity: 0, lifestyle: 0, shopping: 0, total: 0 };
     let breakdown: { _id: string; totalEmissions: number }[] = [];
     let trend: { _id: string; dailyTotal: number }[] = [];
+
+    if (userId) {
+      breakdown = await Activity.aggregate([
+        { $match: { user: userId } },
+        { $group: { _id: '$activityType', totalEmissions: { $sum: '$carbonEmission' } } },
+      ]);
+
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+      trend = await Activity.aggregate([
+        { $match: { user: userId, date: { $gte: sevenDaysAgo } } },
+        {
+          $group: {
+            _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } },
+            dailyTotal: { $sum: '$carbonEmission' },
+          },
+        },
+        { $sort: { _id: 1 } },
+      ]);
+    }
