@@ -41,3 +41,24 @@ export async function GET(req: NextRequest) {
         { $sort: { _id: 1 } },
       ]);
     }
+
+    // Map aggregation result into summary object
+    breakdown.forEach((item) => {
+      if (item._id in summary) {
+        (summary as Record<string, number>)[item._id] = item.totalEmissions;
+        summary.total += item.totalEmissions;
+      }
+    });
+
+    let ecoPoints = 0;
+    let co2Saved = 0;
+    let sustainabilityScore = 0;
+
+    if (userId) {
+      const user = await User.findById(userId);
+      if (user) {
+        ecoPoints = user.ecoPoints ?? 0;
+        co2Saved = user.totalCo2Saved ?? 0;
+        sustainabilityScore = user.sustainabilityScore ?? 0;
+      }
+    }
