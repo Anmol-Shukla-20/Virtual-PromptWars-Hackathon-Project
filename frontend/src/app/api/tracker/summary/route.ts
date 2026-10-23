@@ -62,3 +62,13 @@ export async function GET(req: NextRequest) {
         sustainabilityScore = user.sustainabilityScore ?? 0;
       }
     }
+
+    return NextResponse.json({ breakdown: summary, trend, ecoPoints, co2Saved, sustainabilityScore });
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Server error';
+    const status = message.includes('token') || message.includes('authorization') ? 401 : 500;
+    console.error('Summary Error:', message);
+    return NextResponse.json({ error: message }, { status });
+  }
+}
+
