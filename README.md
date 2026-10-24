@@ -2,7 +2,7 @@
 
 EcoPath AI is an intelligent Carbon Footprint Tracker that empowers individuals to calculate, analyze, and reduce their environmental impact. Built with a modern tech stack, EcoPath AI moves away from arbitrary activity tracking and uses an **impact-based sustainability scoring matrix** to ensure users are rewarded only for true eco-friendly choices.
 
-🌍 **Live Production App:** [https://gdg-x-gfg-project.uc.r.appspot.com](https://gdg-x-gfg-project.uc.r.appspot.com)
+🌍 **Live Production App:** to be deployed very soon!
 
 ## ✨ Core Features
 *   **Intelligent Dashboard:** Visualize your daily CO2 savings, Sustainability Score, and EcoPoints via interactive charts.
