@@ -18,8 +18,6 @@ EcoPath AI is an intelligent Carbon Footprint Tracker that empowers individuals 
 If you just want to test the application, you don't need to run it locally! 
 Simply visit the live link below, create a free account, or Sign In with Google:
 
-**🔗 [Access EcoPath AI Here](https://gdg-x-gfg-project.uc.r.appspot.com)**
-
 ---
 
 ## 💻 Running the App Locally (For Developers)
